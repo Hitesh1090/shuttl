@@ -37,8 +37,9 @@ function Viewer() {
       });
 
       // Create new markers based on values
-      Object.entries(values).forEach(([socketId, data]) => {
-        const { latitude, longitude } = data;
+      Object.entries(userValues).forEach(([socketId, values]) => {
+        const latitude=values.latitude;
+        const longitude=values.longitude;
 
         if (typeof latitude === "number" && typeof longitude === "number") {
           const marker = L.marker([latitude, longitude]).addTo(map);
