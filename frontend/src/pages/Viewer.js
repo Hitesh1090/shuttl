@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -8,15 +8,21 @@ import io from 'socket.io-client';
 function Viewer() {
   const [driverData, setDriverData] = useState({});
   const socket = io('https://shuttl-server.onrender.com'); // Replace with your server's URL
+  const mapRef = useRef(null);
 
   useEffect(() => {
-    const map = L.map('map').setView([12.9725174, 79.1583036], 15);
-    const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
-    osm.addTo(map);
+    if (!mapRef.current) {
+      // Initialize the map only if it hasn't been initialized already
+      const map = L.map('map').setView([12.9725174, 79.1583036], 15);
+      const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+      osm.addTo(map);
+      
+      mapRef.current = map; // Store the map reference in the ref
+    }
 
     socket.on('userValues', (data) => {
       setDriverData(data);
-      updateDriverMarkers(data, map);
+      updateDriverMarkers(data);
     });
 
     return () => {
@@ -24,7 +30,9 @@ function Viewer() {
     };
   }, [socket]);
 
-  const updateDriverMarkers = (data, map) => {
+  const updateDriverMarkers = (data) => {
+    const map = mapRef.current; // Get the map reference
+
     // Clear existing markers
     map.eachLayer((layer) => {
       if (layer instanceof L.Marker) {
