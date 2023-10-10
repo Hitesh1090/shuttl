@@ -40,9 +40,10 @@ function Viewer() {
       Object.entries(userValues).forEach(([socketId, values]) => {
         const latitude=values.latitude;
         const longitude=values.longitude;
-
+        console.log(" hey der : "+ latitude +" bruv : "+ longitude);
         if (typeof latitude === "number" && typeof longitude === "number") {
           const marker = L.marker([latitude, longitude]).addTo(map);
+          console.log("izza numbah hey der : "+ latitude +" bruv : "+ longitude);
           marker.bindPopup(`Socket ID: ${socketId}`);
         }
       });
