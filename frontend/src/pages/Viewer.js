@@ -10,7 +10,6 @@ function Viewer() {
   useEffect(() => {
     socket.on("userValues", (values) => {
       setUserValues(values);
-      updateMarkers(values);
     });
 
     return () => {
@@ -31,7 +30,12 @@ function Viewer() {
       console.error("Map initialization error:", error);
     }
   }, [map]);
-  console.log("Entering update markers :)");
+
+  useEffect(() => {
+    console.log("Entering update markers :)");
+    updateMarkers(userValues);
+  }, [userValues]);
+
   const updateMarkers = (values) => {
     try {
       if (map) {
@@ -46,7 +50,7 @@ function Viewer() {
         Object.entries(values).forEach(([socketId, data]) => {
           const latitude = data.latitude;
           const longitude = data.longitude;
-          console.log("Lat : "+latitude+" lon : "+longitude+" :)");
+          console.log("Lat : " + latitude + " lon : " + longitude + " :)");
           if (typeof latitude === "number" && typeof longitude === "number") {
             const marker = L.marker([latitude, longitude]).addTo(map);
             marker.bindPopup(`Socket ID: ${socketId}`);
@@ -57,7 +61,7 @@ function Viewer() {
       console.error("Marker update error:", error);
     }
   };
-  
+
   return (
     <div>
       <h1>Viewer Page</h1>
