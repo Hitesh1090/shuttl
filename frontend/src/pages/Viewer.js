@@ -27,7 +27,7 @@ function Viewer() {
     }
   }, [map]);
 
-  const updateMarkers = (values) => {
+  const updateMarkers = (userValues) => {
     if (map) {
       // Clear existing markers
       map.eachLayer((layer) => {
