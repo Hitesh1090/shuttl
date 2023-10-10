@@ -31,7 +31,7 @@ function Viewer() {
       console.error("Map initialization error:", error);
     }
   }, [map]);
-
+  console.log("Entering update markers :)");
   const updateMarkers = (values) => {
     try {
       if (map) {
@@ -41,12 +41,12 @@ function Viewer() {
             map.removeLayer(layer);
           }
         });
-
+        console.log("Inside update markers :)");
         // Create new markers based on values
         Object.entries(values).forEach(([socketId, data]) => {
           const latitude = data.latitude;
           const longitude = data.longitude;
-
+          console.log("Lat : "+latitude+" lon : "+longitude+" :)");
           if (typeof latitude === "number" && typeof longitude === "number") {
             const marker = L.marker([latitude, longitude]).addTo(map);
             marker.bindPopup(`Socket ID: ${socketId}`);
@@ -57,7 +57,7 @@ function Viewer() {
       console.error("Marker update error:", error);
     }
   };
-
+  
   return (
     <div>
       <h1>Viewer Page</h1>
