@@ -19,34 +19,42 @@ function Viewer() {
   }, []);
 
   useEffect(() => {
-    // Initialize the map when the component mounts
-    if (!map) {
-      const newMap = L.map("map").setView([12.9725174, 79.1583036], 15);
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(newMap);
-      setMap(newMap);
+    try {
+      // Initialize the map when the component mounts
+      if (!map) {
+        const newMap = L.map("map").setView([12.9725174, 79.1583036], 15);
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(newMap);
+        setMap(newMap);
+        console.log("Map initialized");
+      }
+    } catch (error) {
+      console.error("Map initialization error:", error);
     }
   }, [map]);
 
-  const updateMarkers = (userValues) => {
-    if (map) {
-      // Clear existing markers
-      map.eachLayer((layer) => {
-        if (layer instanceof L.Marker) {
-          map.removeLayer(layer);
-        }
-      });
+  const updateMarkers = (values) => {
+    try {
+      if (map) {
+        // Clear existing markers
+        map.eachLayer((layer) => {
+          if (layer instanceof L.Marker) {
+            map.removeLayer(layer);
+          }
+        });
 
-      // Create new markers based on values
-      Object.entries(userValues).forEach(([socketId, values]) => {
-        const latitude=values.latitude;
-        const longitude=values.longitude;
-        console.log(" hey der : "+ latitude +" bruv : "+ longitude);
-        if (typeof latitude === "number" && typeof longitude === "number") {
-          const marker = L.marker([latitude, longitude]).addTo(map);
-          console.log("izza numbah hey der : "+ latitude +" bruv : "+ longitude);
-          marker.bindPopup(`Socket ID: ${socketId}`);
-        }
-      });
+        // Create new markers based on values
+        Object.entries(values).forEach(([socketId, data]) => {
+          const latitude = data.latitude;
+          const longitude = data.longitude;
+
+          if (typeof latitude === "number" && typeof longitude === "number") {
+            const marker = L.marker([latitude, longitude]).addTo(map);
+            marker.bindPopup(`Socket ID: ${socketId}`);
+          }
+        });
+      }
+    } catch (error) {
+      console.error("Marker update error:", error);
     }
   };
 
