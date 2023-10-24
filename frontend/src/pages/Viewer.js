@@ -127,23 +127,20 @@ function Viewer() {
     }
   };
 
-/*   useEffect(() => {
+   useEffect(() => {
     if (selectedDriver && map) {
       if (routingControl.current) {
         map.removeControl(routingControl.current); // Remove any previous routing control
       }
 
-      const userLocation = [userLatitude, userLongitude]; // Replace with your user's actual location
-      const driverLocation = [driverLatitude, driverLongitude]; // Replace with the selected driver's location
-
       routingControl.current = L.Routing.control({
         waypoints: [
-          L.latLng(userLocation),
-          L.latLng(driverLocation),
+          L.latLng(userLatitude,userLongitude),
+          L.latLng(driverLatitude,driverLongitude),
         ],
       }).addTo(map);
     }
-  }, [selectedDriver, map]); */
+  }, [selectedDriver, map]); 
 
   return (
     <div>
