@@ -18,12 +18,12 @@ function Viewer() {
   }, []);
 
   const userIcon = L.icon({
-    iconUrl: './Images/geo-fill.svg', // Replace with the path to your SVG icon
+    iconUrl: '/Images/geo-fill.svg', // Replace with the path to your SVG icon
     iconSize: [30, 30], // Adjust the size of the icon
   });
 
   const busIcon = L.icon({
-    iconUrl: './Images/bus-front-fill.png', // Replace with the path to your SVG icon
+    iconUrl: 'bus-front-fill.png', // Replace with the path to your SVG icon
     iconSize: [30, 30], // Adjust the size of the icon
   });
 
