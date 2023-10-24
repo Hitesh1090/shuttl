@@ -6,11 +6,11 @@ import L from 'leaflet';
 function Viewer() {
   const [userValues, setUserValues] = useState({});
   const [map, setMap] = useState(null); // Store the map instance
-  const [userLocation, setUserLocation] = useState(null); // Store the user's location
 
   useEffect(() => {
     socket.on("userValues", (values) => {
       setUserValues(values);
+      updateMarkers(values);
     });
 
     return () => {
@@ -32,26 +32,6 @@ function Viewer() {
     }
   }, [map]);
 
-  useEffect(() => {
-    console.log("Entering update markers :)");
-    updateMarkers(userValues);
-  }, [userValues]);
-
-  // Add a separate marker for the user's location
-  useEffect(() => {
-    if (map && userLocation) {
-      const { latitude, longitude } = userLocation;
-      if (typeof latitude === "number" && typeof longitude === "number") {
-        const userIcon = L.icon({
-          iconUrl: '../Images/geo-fill(1).svg', // Replace with the path to your user icon
-          iconSize: [38, 38], // Adjust the size as needed
-        });
-        const userMarker = L.marker([latitude, longitude], { icon: userIcon }).addTo(map);
-        userMarker.bindPopup("Your Location");
-      }
-    }
-  }, [map, userLocation]);
-
   const updateMarkers = (values) => {
     try {
       if (map) {
@@ -62,17 +42,33 @@ function Viewer() {
           }
         });
         console.log("Inside update markers :)");
+
         // Create new markers based on values
         Object.entries(values).forEach(([socketId, data]) => {
           const latitude = data.latitude;
           const longitude = data.longitude;
-          const driverType = data.driverType;
           console.log("Lat : " + latitude + " lon : " + longitude + " :)");
           if (typeof latitude === "number" && typeof longitude === "number") {
             const marker = L.marker([latitude, longitude]).addTo(map);
-            marker.bindPopup(`Socket ID: ${socketId}, Driver Type: ${driverType}`);
+            marker.bindPopup(`Socket ID: ${socketId}`);
           }
         });
+
+        // Get the user's location using geolocation
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition((position) => {
+            const userLatitude = position.coords.latitude;
+            const userLongitude = position.coords.longitude;
+            if (typeof userLatitude === "number" && typeof userLongitude === "number") {
+              const userIcon = L.icon({
+                iconUrl: '../Images/geo-fill.svg', // Replace with the path to your user icon
+                iconSize: [38, 38], // Adjust the size as needed
+              });
+              const userMarker = L.marker([userLatitude, userLongitude], { icon: userIcon }).addTo(map);
+              userMarker.bindPopup("Your Location");
+            }
+          });
+        }
       }
     } catch (error) {
       console.error("Marker update error:", error);
@@ -86,7 +82,7 @@ function Viewer() {
       <ul>
         {Object.entries(userValues).map(([socketId, values]) => (
           <li key={socketId}>
-            Socket ID: {socketId}, Latitude: {values.latitude}, Longitude: {values.longitude}, Driver Type: {values.driverType}
+            Socket ID: {socketId}, Latitude: {values.latitude}, Longitude: {values.longitude}
           </li>
         ))}
       </ul>
