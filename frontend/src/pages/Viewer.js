@@ -45,6 +45,8 @@ function Viewer() {
       const { latitude, longitude } = selectedDriverData;
       driverLatitude = latitude;
       driverLongitude = longitude;
+
+      console.log("Selected Driver Lat: "+ driverLatitude +" Lon: "+ driverLongitude);
     } else {
       // Handle the case where the selected socketID doesn't exist in userValues
       console.error(`Driver data for socketID ${socketId} not found.`);
@@ -69,6 +71,7 @@ function Viewer() {
 
   let userLatitude;
   let userLongitude;
+
   const addMarkerForUserLocation = (map) => {
     if (navigator.geolocation) {
       console.log("Bruv inside curr pos bruv :)")
@@ -124,7 +127,7 @@ function Viewer() {
     }
   };
 
-  useEffect(() => {
+/*   useEffect(() => {
     if (selectedDriver && map) {
       if (routingControl.current) {
         map.removeControl(routingControl.current); // Remove any previous routing control
@@ -140,7 +143,7 @@ function Viewer() {
         ],
       }).addTo(map);
     }
-  }, [selectedDriver, map]);
+  }, [selectedDriver, map]); */
 
   return (
     <div>
