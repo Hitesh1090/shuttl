@@ -6,6 +6,7 @@ import L from 'leaflet';
 function Viewer() {
   const [userValues, setUserValues] = useState({});
   const [map, setMap] = useState(null); // Store the map instance
+  const [userLocation, setUserLocation] = useState(null); // Store the user's location
 
   useEffect(() => {
     socket.on("userValues", (values) => {
@@ -36,6 +37,21 @@ function Viewer() {
     updateMarkers(userValues);
   }, [userValues]);
 
+  // Add a separate marker for the user's location
+  useEffect(() => {
+    if (map && userLocation) {
+      const { latitude, longitude } = userLocation;
+      if (typeof latitude === "number" && typeof longitude === "number") {
+        const userIcon = L.icon({
+          iconUrl: '../Images/geo-fill(1).svg', // Replace with the path to your user icon
+          iconSize: [38, 38], // Adjust the size as needed
+        });
+        const userMarker = L.marker([latitude, longitude], { icon: userIcon }).addTo(map);
+        userMarker.bindPopup("Your Location");
+      }
+    }
+  }, [map, userLocation]);
+
   const updateMarkers = (values) => {
     try {
       if (map) {
@@ -50,10 +66,11 @@ function Viewer() {
         Object.entries(values).forEach(([socketId, data]) => {
           const latitude = data.latitude;
           const longitude = data.longitude;
+          const driverType = data.driverType;
           console.log("Lat : " + latitude + " lon : " + longitude + " :)");
           if (typeof latitude === "number" && typeof longitude === "number") {
             const marker = L.marker([latitude, longitude]).addTo(map);
-            marker.bindPopup(`Socket ID: ${socketId}`);
+            marker.bindPopup(`Socket ID: ${socketId}, Driver Type: ${driverType}`);
           }
         });
       }
@@ -69,7 +86,7 @@ function Viewer() {
       <ul>
         {Object.entries(userValues).map(([socketId, values]) => (
           <li key={socketId}>
-            Socket ID: {socketId}, Latitude: {values.latitude}, Longitude: {values.longitude}
+            Socket ID: {socketId}, Latitude: {values.latitude}, Longitude: {values.longitude}, Driver Type: {values.driverType}
           </li>
         ))}
       </ul>
