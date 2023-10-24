@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import socket from "../services/socket";
 import 'leaflet/dist/leaflet.css';
+import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 import L from 'leaflet';
+import 'leaflet-routing-machine';
 
 function Viewer() {
   const [userValues, setUserValues] = useState({});
   const [map, setMap] = useState(null); // Store the map instance
+  const [selectedDriver, setSelectedDriver] = useState(null);
 
   useEffect(() => {
     socket.on("userValues", (values) => {
@@ -27,6 +30,9 @@ function Viewer() {
     iconSize: [30, 30], // Adjust the size of the icon
   });
 
+  const handleDriverSelect = (socketId) => {
+    setSelectedDriver(socketId);
+  };
 
 
   useEffect(() => {
@@ -106,6 +112,11 @@ function Viewer() {
         ))}
       </ul>
       <div id="map" style={{ height: "400px" }}></div>
+      {Object.keys(userValues).map((socketId) => (
+        <button key={socketId} onClick={() => handleDriverSelect(socketId)}>
+          Select Driver {socketId}
+        </button>
+      ))}
     </div>
   );
 }
