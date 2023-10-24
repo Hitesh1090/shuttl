@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import socket from "../services/socket";
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
@@ -9,6 +9,7 @@ function Viewer() {
   const [userValues, setUserValues] = useState({});
   const [map, setMap] = useState(null); // Store the map instance
   const [selectedDriver, setSelectedDriver] = useState(null);
+  const routingControl = useRef(null);
 
   useEffect(() => {
     socket.on("userValues", (values) => {
@@ -30,9 +31,26 @@ function Viewer() {
     iconSize: [30, 30], // Adjust the size of the icon
   });
 
+
+  let driverLatitude;
+  let driverLongitude;
+
   const handleDriverSelect = (socketId) => {
     setSelectedDriver(socketId);
+  
+    // Retrieve the coordinates for the selected driver
+    const selectedDriverData = userValues[socketId];
+  
+    if (selectedDriverData) {
+      const { latitude, longitude } = selectedDriverData;
+      driverLatitude = latitude;
+      driverLongitude = longitude;
+    } else {
+      // Handle the case where the selected socketID doesn't exist in userValues
+      console.error(`Driver data for socketID ${socketId} not found.`);
+    }
   };
+  
 
 
   useEffect(() => {
@@ -49,11 +67,15 @@ function Viewer() {
     }
   }, [map]);
 
+  let userLatitude;
+  let userLongitude;
   const addMarkerForUserLocation = (map) => {
     if (navigator.geolocation) {
       console.log("Bruv inside curr pos bruv :)")
       navigator.geolocation.getCurrentPosition((position) => {
         const { latitude, longitude } = position.coords;
+        userLatitude=latitude;
+        userLongitude=longitude;
         const userMarker = L.marker([latitude, longitude], {icon: userIcon}).addTo(map);
         userMarker.bindPopup("Your Location").openPopup();
       }, (error) => {
@@ -70,6 +92,8 @@ function Viewer() {
     updateMarkers(userValues);
     
   }, [userValues]);
+
+
 
   const updateMarkers = (values) => {
     try {
@@ -99,6 +123,24 @@ function Viewer() {
       console.error("Marker update error:", error);
     }
   };
+
+  useEffect(() => {
+    if (selectedDriver && map) {
+      if (routingControl.current) {
+        map.removeControl(routingControl.current); // Remove any previous routing control
+      }
+
+      const userLocation = [userLatitude, userLongitude]; // Replace with your user's actual location
+      const driverLocation = [driverLatitude, driverLongitude]; // Replace with the selected driver's location
+
+      routingControl.current = L.Routing.control({
+        waypoints: [
+          L.latLng(userLocation),
+          L.latLng(driverLocation),
+        ],
+      }).addTo(map);
+    }
+  }, [selectedDriver, map]);
 
   return (
     <div>
