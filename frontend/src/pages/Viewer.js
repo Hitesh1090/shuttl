@@ -10,7 +10,6 @@ function Viewer() {
   useEffect(() => {
     socket.on("userValues", (values) => {
       setUserValues(values);
-      updateMarkers(values);
     });
 
     return () => {
@@ -32,6 +31,28 @@ function Viewer() {
     }
   }, [map]);
 
+  const addMarkerForUserLocation = (map) => {
+    if (navigator.geolocation) {
+      console.log("Bruv inside curr pos bruv :)")
+      navigator.geolocation.getCurrentPosition((position) => {
+        const { latitude, longitude } = position.coords;
+        const userMarker = L.marker([latitude, longitude]).addTo(map);
+        userMarker.bindPopup("Your Location").openPopup();
+      }, (error) => {
+        console.error("Error getting user's location:", error);
+      });
+    } else {
+      console.error("Geolocation is not supported by your browser.");
+    }
+  };
+
+
+  useEffect(() => {
+    console.log("Entering update markers :)");
+    updateMarkers(userValues);
+    
+  }, [userValues]);
+
   const updateMarkers = (values) => {
     try {
       if (map) {
@@ -42,33 +63,19 @@ function Viewer() {
           }
         });
         console.log("Inside update markers :)");
-
         // Create new markers based on values
+        addMarkerForUserLocation(map);
+        
         Object.entries(values).forEach(([socketId, data]) => {
           const latitude = data.latitude;
           const longitude = data.longitude;
+          const driverType = data.driverType; // Get the driver type from data
           console.log("Lat : " + latitude + " lon : " + longitude + " :)");
           if (typeof latitude === "number" && typeof longitude === "number") {
             const marker = L.marker([latitude, longitude]).addTo(map);
-            marker.bindPopup(`Socket ID: ${socketId}`);
+            marker.bindPopup(`Socket ID: ${socketId}, Driver Type: ${driverType}`); // Display driver type in the popup
           }
         });
-
-        // Get the user's location using geolocation
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition((position) => {
-            const userLatitude = position.coords.latitude;
-            const userLongitude = position.coords.longitude;
-            if (typeof userLatitude === "number" && typeof userLongitude === "number") {
-              const userIcon = L.icon({
-                iconUrl: '../Images/geo-fill.svg', // Replace with the path to your user icon
-                iconSize: [38, 38], // Adjust the size as needed
-              });
-              const userMarker = L.marker([userLatitude, userLongitude], { icon: userIcon }).addTo(map);
-              userMarker.bindPopup("Your Location");
-            }
-          });
-        }
       }
     } catch (error) {
       console.error("Marker update error:", error);
@@ -82,7 +89,7 @@ function Viewer() {
       <ul>
         {Object.entries(userValues).map(([socketId, values]) => (
           <li key={socketId}>
-            Socket ID: {socketId}, Latitude: {values.latitude}, Longitude: {values.longitude}
+            Socket ID: {socketId}, Latitude: {values.latitude}, Longitude: {values.longitude}, Driver Type: {values.driverType}
           </li>
         ))}
       </ul>
