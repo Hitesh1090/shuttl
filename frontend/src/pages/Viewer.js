@@ -17,6 +17,18 @@ function Viewer() {
     };
   }, []);
 
+  const userIcon = L.icon({
+    iconUrl: '../Images/geo-fill.svg', // Replace with the path to your SVG icon
+    iconSize: [30, 30], // Adjust the size of the icon
+  });
+
+  const busIcon = L.icon({
+    iconUrl: '../Images/bus-front-fill.svg', // Replace with the path to your SVG icon
+    iconSize: [30, 30], // Adjust the size of the icon
+  });
+
+
+
   useEffect(() => {
     try {
       // Initialize the map when the component mounts
@@ -36,7 +48,7 @@ function Viewer() {
       console.log("Bruv inside curr pos bruv :)")
       navigator.geolocation.getCurrentPosition((position) => {
         const { latitude, longitude } = position.coords;
-        const userMarker = L.marker([latitude, longitude]).addTo(map);
+        const userMarker = L.marker([latitude, longitude], {icon: userIcon}).addTo(map);
         userMarker.bindPopup("Your Location").openPopup();
       }, (error) => {
         console.error("Error getting user's location:", error);
@@ -72,7 +84,7 @@ function Viewer() {
           const driverType = data.driverType; // Get the driver type from data
           console.log("Lat : " + latitude + " lon : " + longitude + " :)");
           if (typeof latitude === "number" && typeof longitude === "number") {
-            const marker = L.marker([latitude, longitude]).addTo(map);
+            const marker = L.marker([latitude, longitude], {icon: busIcon}).addTo(map);
             marker.bindPopup(`Socket ID: ${socketId}, Driver Type: ${driverType}`); // Display driver type in the popup
           }
         });
