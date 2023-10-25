@@ -129,7 +129,7 @@ function Viewer() {
     console.log("This is the routing useEffect");
     if (selectedDriver && map && userCoordinates && driverCoordinates) {
       if (routingControl) {
-        routingControl.spliceWaypoints(0, 2); // Remove waypoints to clear the route
+        //routingControl.spliceWaypoints(0, 2); // Remove waypoints to clear the route
         map.removeControl(routingControl); // Remove the routing control
       }
   
