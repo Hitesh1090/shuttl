@@ -122,13 +122,7 @@ function Viewer() {
           }
         });
       }
-    } catch (error) {
-      console.error("Marker update error:", error);
-    }
-  };
-
-   useEffect(() => {
-
+// Routing 
     console.log("This is the routing useeffect :P");
     if (selectedDriver && map) {
       if (routingControl.current) {
@@ -143,7 +137,11 @@ function Viewer() {
         ], routeWhileDragging: true
       }).addTo(map);
     }
-  }, [selectedDriver, map]); 
+
+    } catch (error) {
+      console.error("Marker update error:", error);
+    }
+  };
 
   return (
     <div>
