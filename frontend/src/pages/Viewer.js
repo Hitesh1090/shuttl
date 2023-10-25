@@ -122,7 +122,14 @@ function Viewer() {
           }
         });
       }
-// Routing 
+    } catch (error) {
+      console.error("Marker update error:", error);
+    }
+  };
+
+  //Routing
+   useEffect(() => {
+
     console.log("This is the routing useeffect :P");
     if (selectedDriver && map) {
       if (routingControl.current) {
@@ -130,6 +137,7 @@ function Viewer() {
       }
 
       console.log("Gotha inside routing :D");
+      console.log("ULat: "+userLatitude+" ULo: "+userLongitude+" DLat: "+driverLatitude+" DLo: "+driverLongitude);
       L.Routing.control({
         waypoints: [
           L.latLng(userLatitude,userLongitude),
@@ -137,11 +145,7 @@ function Viewer() {
         ], routeWhileDragging: true
       }).addTo(map);
     }
-
-    } catch (error) {
-      console.error("Marker update error:", error);
-    }
-  };
+  },[selectedDriver,map]); 
 
   return (
     <div>
