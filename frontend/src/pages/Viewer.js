@@ -146,6 +146,10 @@ function Viewer() {
       }).addTo(map).on('routesfound', function(e) {
         routingControl.current = e.routes[0].route; // Store the routing control
       });
+
+      L.Routing.Itinerary({
+        show: false,
+      });
     }
   }, [selectedDriver, map, userCoordinates, driverCoordinates]);
 
