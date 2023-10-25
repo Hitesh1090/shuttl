@@ -133,11 +133,12 @@ function Viewer() {
         map.removeControl(routingControl.current); // Remove any previous routing control
       }
 
-      routingControl.current = L.Routing.control({
+      console.log("Gotha inside routing :D");
+      L.Routing.control({
         waypoints: [
           L.latLng(userLatitude,userLongitude),
           L.latLng(driverLatitude,driverLongitude),
-        ],
+        ], routeWhileDragging: true
       }).addTo(map);
     }
   }, [selectedDriver, map]); 
