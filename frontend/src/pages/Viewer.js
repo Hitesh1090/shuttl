@@ -9,6 +9,8 @@ function Viewer() {
   const [userValues, setUserValues] = useState({});
   const [map, setMap] = useState(null); // Store the map instance
   const [selectedDriver, setSelectedDriver] = useState(null);
+  const [userCoordinates, setUserCoordinates] = useState(null);
+  const [driverCoordinates, setDriverCoordinates] = useState(null);
   const routingControl = useRef(null);
 
   useEffect(() => {
@@ -32,9 +34,6 @@ function Viewer() {
   });
 
 
-  let driverLatitude;
-  let driverLongitude;
-
   const handleDriverSelect = (socketId) => {
     setSelectedDriver(socketId);
   
@@ -43,10 +42,7 @@ function Viewer() {
   
     if (selectedDriverData) {
       const { latitude, longitude } = selectedDriverData;
-      driverLatitude = latitude;
-      driverLongitude = longitude;
-
-      console.log("Selected Driver Lat: "+ driverLatitude +" Lon: "+ driverLongitude);
+      setDriverCoordinates([latitude, longitude]);
     } else {
       // Handle the case where the selected socketID doesn't exist in userValues
       console.error(`Driver data for socketID ${socketId} not found.`);
@@ -69,21 +65,21 @@ function Viewer() {
     }
   }, [map]);
 
-  let userLatitude;
-  let userLongitude;
 
   const addMarkerForUserLocation = (map) => {
     if (navigator.geolocation) {
       console.log("Bruv inside curr pos bruv :)")
-      navigator.geolocation.getCurrentPosition((position) => {
-        const { latitude, longitude } = position.coords;
-        userLatitude=latitude;
-        userLongitude=longitude;
-        const userMarker = L.marker([latitude, longitude], {icon: userIcon}).addTo(map);
-        userMarker.bindPopup("Your Location").openPopup();
-      }, (error) => {
-        console.error("Error getting user's location:", error);
-      });
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setUserCoordinates([latitude, longitude]); // Set the user coordinates
+          const userMarker = L.marker([latitude, longitude], { icon: userIcon }).addTo(map);
+          userMarker.bindPopup("Your Location").openPopup();
+        },
+        (error) => {
+          console.error("Error getting user's location:", error);
+        }
+      );
     } else {
       console.error("Geolocation is not supported by your browser.");
     }
@@ -128,24 +124,23 @@ function Viewer() {
   };
 
   //Routing
-   useEffect(() => {
-
-    console.log("This is the routing useeffect :P");
-    if (selectedDriver && map) {
+  useEffect(() => {
+    console.log("This is the routing useEffect");
+    if (selectedDriver && map && userCoordinates && driverCoordinates) {
       if (routingControl.current) {
         map.removeControl(routingControl.current); // Remove any previous routing control
       }
 
-      console.log("Gotha inside routing :D");
-      console.log("ULat: "+userLatitude+" ULo: "+userLongitude+" DLat: "+driverLatitude+" DLo: "+driverLongitude);
+      console.log("UC : "+userCoordinates+" DC :"+driverCoordinates);
       L.Routing.control({
         waypoints: [
-          L.latLng(userLatitude,userLongitude),
-          L.latLng(driverLatitude,driverLongitude),
-        ], routeWhileDragging: true
+          L.latLng(userCoordinates[0], userCoordinates[1]),
+          L.latLng(driverCoordinates[0], driverCoordinates[1]),
+        ],
+        routeWhileDragging: true,
       }).addTo(map);
     }
-  },[selectedDriver,map]); 
+  }, [selectedDriver, map, userCoordinates, driverCoordinates]);
 
   return (
     <div>
