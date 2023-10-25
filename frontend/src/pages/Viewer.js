@@ -128,6 +128,8 @@ function Viewer() {
   };
 
    useEffect(() => {
+
+    console.log("This is the routing useeffect :P");
     if (selectedDriver && map) {
       if (routingControl.current) {
         map.removeControl(routingControl.current); // Remove any previous routing control
