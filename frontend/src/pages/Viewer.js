@@ -128,9 +128,10 @@ function Viewer() {
   useEffect(() => {
     console.log("This is the routing useEffect");
     if (selectedDriver && map && userCoordinates && driverCoordinates) {
-      if (routingControl) {
-        //routingControl.spliceWaypoints(0, 2); // Remove waypoints to clear the route
-        map.removeControl(routingControl); // Remove the routing control
+      if (routingControl.current) {
+        routingControl.current.spliceWaypoints(0, 2); // Remove waypoints to clear the route
+        map.removeControl(routingControl.current);
+        routingControl.current = null; // Remove the routing control
       }
   
       console.log("UC : " + userCoordinates + " DC :" + driverCoordinates);
@@ -141,6 +142,7 @@ function Viewer() {
           L.latLng(driverCoordinates[0], driverCoordinates[1]),
         ],
         show: false,
+        autoRoute: true,
         waypointMode: 'connect',
         collapsible: true, // assuming 'connect' is a string
       }).addTo(map).on('routesfound', function (e) {
