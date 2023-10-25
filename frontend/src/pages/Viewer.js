@@ -148,7 +148,7 @@ function Viewer() {
       });
   
       // Disable the itinerary
-      routing.itinerary({
+      routing.control({
         show: false,
       });
   
