@@ -136,22 +136,17 @@ function Viewer() {
   
       console.log("UC : " + userCoordinates + " DC :" + driverCoordinates);
   
-      var routing = L.Routing.control({
+      L.Routing.control({
         waypoints: [
           L.latLng(userCoordinates[0], userCoordinates[1]),
           L.latLng(driverCoordinates[0], driverCoordinates[1]),
         ],
         hide: true,
-        waypointMode: 'connect', // assuming 'connect' is a string
+        waypointMode: 'connect',
+        collapsible: true, // assuming 'connect' is a string
       }).addTo(map).on('routesfound', function (e) {
         routingControl.current = e.routes[0].route; // Store the routing control
       });
-  
-      // Disable the itinerary
-      routing.control({
-        show: false,
-      });
-  
       // To remove the routing control and cleanup
       /* routing.removeFrom(map);
       routing = null; */
