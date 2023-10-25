@@ -129,29 +129,35 @@ function Viewer() {
     console.log("This is the routing useEffect");
     if (selectedDriver && map && userCoordinates && driverCoordinates) {
       if (routingControl.current) {
-        routingControl.current.spliceWaypoints(0, 2); // Remove waypoints to clear route
+        routingControl.current.spliceWaypoints(0, 2); // Remove waypoints to clear the route
         map.removeControl(routingControl.current);
-        routingControl.current=null; // Remove the routing control
+        routingControl.current = null; // Remove the routing control
       }
-
-      console.log("UC : "+userCoordinates+" DC :"+driverCoordinates);
-      
-      L.Routing.control({
+  
+      console.log("UC : " + userCoordinates + " DC :" + driverCoordinates);
+  
+      var routing = L.Routing.control({
         waypoints: [
           L.latLng(userCoordinates[0], userCoordinates[1]),
           L.latLng(driverCoordinates[0], driverCoordinates[1]),
         ],
         hide: true,
-        waypointMode: connect,
-      }).addTo(map).on('routesfound', function(e) {
+        waypointMode: 'connect', // assuming 'connect' is a string
+      }).addTo(map).on('routesfound', function (e) {
         routingControl.current = e.routes[0].route; // Store the routing control
       });
-
-      L.Routing.Itinerary({
+  
+      // Disable the itinerary
+      routing.itinerary({
         show: false,
       });
+  
+      // To remove the routing control and cleanup
+      /* routing.removeFrom(map);
+      routing = null; */
     }
   }, [selectedDriver, map, userCoordinates, driverCoordinates]);
+  
 
   return (
     <div>
