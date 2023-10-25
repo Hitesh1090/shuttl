@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import socket from "../services/socket";
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
-import L from 'leaflet';
+import L, { routing } from 'leaflet';
 import 'leaflet-routing-machine';
 import { connect } from "socket.io-client";
 
@@ -130,7 +130,8 @@ function Viewer() {
     if (selectedDriver && map && userCoordinates && driverCoordinates) {
       if (routingControl.current) {
         routingControl.current.spliceWaypoints(0, 2); // Remove waypoints to clear route
-        map.removeControl(routingControl.current); // Remove the routing control
+        map.removeControl(routingControl.current);
+        routingControl.current=null; // Remove the routing control
       }
 
       console.log("UC : "+userCoordinates+" DC :"+driverCoordinates);
@@ -140,8 +141,8 @@ function Viewer() {
           L.latLng(userCoordinates[0], userCoordinates[1]),
           L.latLng(driverCoordinates[0], driverCoordinates[1]),
         ],
+        hide: true,
         waypointMode: connect,
-        show: false,
       }).addTo(map).on('routesfound', function(e) {
         routingControl.current = e.routes[0].route; // Store the routing control
       });
