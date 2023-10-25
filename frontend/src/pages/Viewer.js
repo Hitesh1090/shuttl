@@ -140,7 +140,8 @@ function Viewer() {
           L.latLng(userCoordinates[0], userCoordinates[1]),
           L.latLng(driverCoordinates[0], driverCoordinates[1]),
         ],
-        waypointMode: connect
+        waypointMode: connect,
+        show: false,
       }).addTo(map).on('routesfound', function(e) {
         routingControl.current = e.routes[0].route; // Store the routing control
       });
