@@ -4,6 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 import L from 'leaflet';
 import 'leaflet-routing-machine';
+import { connect } from "socket.io-client";
 
 function Viewer() {
   const [userValues, setUserValues] = useState({});
@@ -128,17 +129,20 @@ function Viewer() {
     console.log("This is the routing useEffect");
     if (selectedDriver && map && userCoordinates && driverCoordinates) {
       if (routingControl.current) {
-        map.removeControl(routingControl.current); // Remove any previous routing control
+        routingControl.current.getPlan().setWaypoints([]); // Clear previous waypoints
       }
 
       console.log("UC : "+userCoordinates+" DC :"+driverCoordinates);
+      
       L.Routing.control({
         waypoints: [
           L.latLng(userCoordinates[0], userCoordinates[1]),
           L.latLng(driverCoordinates[0], driverCoordinates[1]),
         ],
-        routeWhileDragging: true,
-      }).addTo(map);
+        waypointMode: connect
+      }).addTo(map).on('routesfound', function(e) {
+        routingControl.current = e.routes[0].route; // Store the routing control
+      });
     }
   }, [selectedDriver, map, userCoordinates, driverCoordinates]);
 
