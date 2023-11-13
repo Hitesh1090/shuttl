@@ -54,25 +54,20 @@ const Home = () => {
       </nav>
 
       {/* Bootstrap Hero Section */}
-      <div className="container py-5">
-        <div className="row">
-          <div className="col-md-6">
-            <h1>Welcome to Shuttl</h1>
-            <p>Discover the easiest way to travel.</p>
-            <button className="btn btn-primary" onClick={goToDriver}>
-              Go to Driver
-            </button>
-          </div>
-          <div className="col-md-6">
-            {/* Placeholder for an image */}
-            {/* Replace the placeholder with an actual image */}
-            <img src={heroImage} alt="Shuttl GIF" className="img-fluid"/>
-          </div>
-        </div>
+      <div class="px-4 py-5 my-5 text-center">
+    <img class="d-block mx-auto mb-4" src={heroImage} alt="" width="72" height="57"/>
+    <h1 class="display-5 fw-bold text-body-emphasis">Tired of waiting around ?</h1>
+    <div class="col-lg-6 mx-auto">
+      <p class="lead mb-4">Never miss your ride, follow your shuttle's stride!</p>
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        <button type="button" class="btn btn-primary btn-lg px-4 gap-3" onClick={goToViewer}>Try now</button>
+        <button type="button" class="btn btn-outline-secondary btn-lg px-4" onClick={goToDriver}>Driver's Page</button>
       </div>
+    </div>
+  </div>
 
       {/* Buttons to navigate */}
-      <div className="container mt-4">
+      {/* <div className="container mt-4">
         <div className="row">
           <div className="col-md-6">
             <button className="btn btn-secondary" onClick={goToDriver}>
@@ -85,7 +80,7 @@ const Home = () => {
             </button>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Footer */}
       <footer className="footer mt-5 py-3 bg-light">
