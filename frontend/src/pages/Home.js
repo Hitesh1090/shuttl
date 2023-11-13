@@ -56,7 +56,8 @@ const Home = () => {
       </nav>
 
       {/* Bootstrap Hero Section */}
-      <div class="container row flex-lg-row-reverse align-items-center g-5 py-5">
+      <div className="container">
+      <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
       <div class="col-10 col-sm-8 col-lg-6">
         <img src={heroImage} class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="100" height="100" loading="lazy"/>
       </div>
@@ -68,6 +69,7 @@ const Home = () => {
           <button type="button" class="btn btn-outline-secondary btn-lg px-4" onclick={goToDriver}>Driver's page</button>
         </div>
       </div>
+    </div>
     </div>
 
       {/* Buttons to navigate */}
