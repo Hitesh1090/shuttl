@@ -56,17 +56,19 @@ const Home = () => {
       </nav>
 
       {/* Bootstrap Hero Section */}
-      <div class="px-4 py-5 my-5 text-center">
-    <img class="d-block mx-auto mb-4" src={heroImage} alt="HeroGIF" width="72" height="72"/>
-    <h1 class="display-5 fw-bold text-body-emphasis">Tired of waiting around ?</h1>
-    <div class="col-lg-6 mx-auto">
-      <p class="lead mb-4">Never miss your ride, follow your shuttle's stride!</p>
-      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-        <button type="button" class="btn btn-primary btn-lg px-4 gap-3" onClick={goToViewer}>Try now</button>
-        <button type="button" class="btn btn-outline-secondary btn-lg px-4" onClick={goToDriver}>Driver's Page</button>
+      <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+      <div class="col-10 col-sm-8 col-lg-6">
+        <img src={heroImage} class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy"/>
+      </div>
+      <div class="col-lg-6">
+        <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Tired of waiting around ?</h1>
+        <p class="lead">Never miss a ride, follow your shuttl's stride!</p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+          <button type="button" class="btn btn-primary btn-lg px-4 me-md-2" onclick={goToViewer}>Try now</button>
+          <button type="button" class="btn btn-outline-secondary btn-lg px-4" onclick={goToDriver}>Driver's page</button>
+        </div>
       </div>
     </div>
-  </div>
 
       {/* Buttons to navigate */}
       {/* <div className="container mt-4">
