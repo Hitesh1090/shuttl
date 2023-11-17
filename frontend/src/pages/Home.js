@@ -59,14 +59,14 @@ const Home = () => {
       <div className="container py-5">
       <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
       <div class="col-10 col-sm-8 col-lg-6">
-        <img src={heroImage} class="d-block mx-sm-auto mx-md-auto mx-lg-auto img-fluid" alt="Bootstrap Themes" width="100" height="100" loading="lazy"/>
+        <img src={heroImage} class="d-block mx-xs-auto mx-sm-auto mx-md-auto mx-lg-auto img-fluid" alt="Bootstrap Themes" width="100" height="100" loading="lazy"/>
       </div>
       <div class="col-lg-6">
         <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Tired of waiting around ?</h1>
         <p class="lead">Never miss a ride, follow your shuttl's stride!</p>
         <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-          <button type="button" class="btn btn-primary btn-lg px-4 me-md-2" onclick={goToViewer}>Try now</button>
-          <button type="button" class="btn btn-outline-secondary btn-lg px-4" onclick={goToDriver}>Driver's page</button>
+          <button className="btn btn-primary btn-lg px-4 me-md-2" onclick={goToViewer}>Try now</button>
+          <button className="btn btn-outline-secondary btn-lg px-4" onclick={goToDriver}>Driver's page</button>
         </div>
       </div>
     </div>
