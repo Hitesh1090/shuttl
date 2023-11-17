@@ -5,6 +5,8 @@ import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 import L, { routing } from 'leaflet';
 import 'leaflet-routing-machine';
 import { connect } from "socket.io-client";
+import userIc from './Images/geo-fill.svg';
+import busIc from './Images/bus-front-fill.svg';
 
 function Viewer() {
   const [userValues, setUserValues] = useState({});
@@ -13,6 +15,7 @@ function Viewer() {
   const [userCoordinates, setUserCoordinates] = useState(null);
   const [driverCoordinates, setDriverCoordinates] = useState(null);
   const routingControl = useRef(null);
+ 
 
   useEffect(() => {
     socket.on("userValues", (values) => {
@@ -25,12 +28,12 @@ function Viewer() {
   }, []);
 
   const userIcon = L.icon({
-    iconUrl: '/Images/geo-fill.svg', // Replace with the path to your SVG icon
+    iconUrl: {userIc}, // Replace with the path to your SVG icon
     iconSize: [30, 30], // Adjust the size of the icon
   });
 
   const busIcon = L.icon({
-    iconUrl: 'bus-front-fill.png', // Replace with the path to your SVG icon
+    iconUrl: {busIc}, // Replace with the path to your SVG icon
     iconSize: [30, 30], // Adjust the size of the icon
   });
 
@@ -157,7 +160,7 @@ function Viewer() {
 
   return (
     <div>
-      <h1>Viewer Page</h1>
+       {/*<h1>Viewer Page</h1>
       <h2>User Values:</h2>
       <ul>
         {Object.entries(userValues).map(([socketId, values]) => (
@@ -165,7 +168,7 @@ function Viewer() {
             Socket ID: {socketId}, Latitude: {values.latitude}, Longitude: {values.longitude}, Driver Type: {values.driverType}
           </li>
         ))}
-      </ul>
+      </ul> */}
       <div id="map" style={{ height: "400px" }}></div>
       {Object.keys(userValues).map((socketId) => (
         <button key={socketId} onClick={() => handleDriverSelect(socketId)}>

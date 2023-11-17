@@ -65,8 +65,8 @@ const Home = () => {
         <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Tired of waiting around ?</h1>
         <p class="lead">Never miss a ride, follow your shuttl's stride!</p>
         <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-          <button className="btn btn-primary btn-lg px-4 me-md-2" onclick={goToViewer}>Try now</button>
-          <button className="btn btn-outline-secondary btn-lg px-4" onclick={goToDriver}>Driver's page</button>
+          <button className="btn btn-primary btn-lg px-4 me-md-2" onClick={goToViewer}>Try now</button>
+          <button className="btn btn-outline-secondary btn-lg px-4" onClick={goToDriver}>Driver's page</button>
         </div>
       </div>
     </div>
@@ -89,7 +89,7 @@ const Home = () => {
       </div> */}
 
       {/* About */}
-
+      
 
       {/* Footer */}
       <footer className="footer mt-5 py-3 bg-light">
