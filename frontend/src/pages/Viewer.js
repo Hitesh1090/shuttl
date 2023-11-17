@@ -5,7 +5,7 @@ import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 import L, { routing } from 'leaflet';
 import 'leaflet-routing-machine';
 import { connect } from "socket.io-client";
-import userIc from './Images/geo-fill.svg';
+import userIc from './bus-front-fill.png';
 import busIc from'./Images/bus-front-fill.svg';
 
 function Viewer() {
@@ -28,7 +28,7 @@ function Viewer() {
   }, []);
 
   const userIcon = L.icon({
-    iconUrl: "./Images/geo-fill.svg", // Replace with the path to your SVG icon
+    iconUrl: userIc, // Replace with the path to your SVG icon
     iconSize: [30, 30], // Adjust the size of the icon
   });
 
@@ -77,7 +77,7 @@ function Viewer() {
         (position) => {
           const { latitude, longitude } = position.coords;
           setUserCoordinates([latitude, longitude]); // Set the user coordinates
-          const userMarker = L.marker([latitude, longitude], {icon: {userIc}}).addTo(map);
+          const userMarker = L.marker([latitude, longitude], { icon: userIcon }).addTo(map);
           userMarker.bindPopup("Your Location").openPopup();
         },
         (error) => {
@@ -117,7 +117,7 @@ function Viewer() {
           const driverType = data.driverType; // Get the driver type from data
           console.log("Lat : " + latitude + " lon : " + longitude + " :)");
           if (typeof latitude === "number" && typeof longitude === "number") {
-            const marker = L.marker([latitude, longitude], {icon: {busIc}}).addTo(map);
+            const marker = L.marker([latitude, longitude], {icon: busIcon}).addTo(map);
             marker.bindPopup(`Socket ID: ${socketId}, Driver Type: ${driverType}`); // Display driver type in the popup
           }
         });
