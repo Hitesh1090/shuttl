@@ -5,8 +5,8 @@ import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 import L, { routing } from 'leaflet';
 import 'leaflet-routing-machine';
 import { connect } from "socket.io-client";
-import userIc from './Images/geo-fill.svg';
-import busIc from './Images/bus-front-fill.svg';
+import './Images/geo-fill.svg';
+import'./Images/bus-front-fill.svg';
 
 function Viewer() {
   const [userValues, setUserValues] = useState({});
@@ -28,12 +28,12 @@ function Viewer() {
   }, []);
 
   const userIcon = L.icon({
-    iconUrl: {userIc}, // Replace with the path to your SVG icon
+    iconUrl: "./Images/geo-fill.svg", // Replace with the path to your SVG icon
     iconSize: [30, 30], // Adjust the size of the icon
   });
 
   const busIcon = L.icon({
-    iconUrl: {busIc}, // Replace with the path to your SVG icon
+    iconUrl: "./Images/bus-front-fill.svg", // Replace with the path to your SVG icon
     iconSize: [30, 30], // Adjust the size of the icon
   });
 
