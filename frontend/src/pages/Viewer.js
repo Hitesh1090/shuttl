@@ -161,8 +161,8 @@ function Viewer() {
   return (
     <div>
       <div class="h-100 p-5 mb-4 bg-body-tertiary rounded-3">
-      <div class="container-fluid py-5">
-        <h2 class="display-5 fw-bold">Drivers Online</h2>
+      <div class="container py-5">
+        <h3 class="display-5 fw-bold">Drivers Online:</h3>
         <ol>
         {Object.entries(userValues).map(([socketId, values]) => (
           <li class="col-md-8 fs-4" key={socketId}>
