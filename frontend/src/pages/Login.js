@@ -74,7 +74,7 @@ const Login = () => {
         </div>
       </nav>
       <div className="container">
-  <div className="p-5 text-center bg-body-tertiary rounded-3">
+  <div className="p-5 text-center">
     <img src={heroImage} className="d-block mx-xs-auto mx-sm-auto mx-md-auto mx-lg-auto img-fluid" alt="Bootstrap Themes" width="100" height="100" loading="lazy"/>
     <h1 className="text-body-emphasis">Login</h1>
     <p className="col-lg-8 mx-auto fs-5 text-muted">
