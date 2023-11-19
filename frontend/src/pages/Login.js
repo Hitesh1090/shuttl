@@ -1,25 +1,43 @@
-import React from "react";
+// Import necessary libraries
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'jquery/dist/jquery.min.js';
-import 'bootstrap/dist/js/bootstrap.min.js';
 import { Link, useNavigate } from "react-router-dom";
-import heroImage from './icons8-bus.gif';
+import 'bootstrap/dist/js/bootstrap.min.js';
 
-const Home = () => {
-  const navigate = useNavigate();
+// Functional component for the login page
+const Login = () => {
+  // State to hold the entered password
+  const [password, setPassword] = useState('');
 
-  const goToDriver = () => {
-    navigate("/login");
+  // Function to handle password input change
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
   };
 
-  const goToViewer = () => {
-    navigate("/viewer");
+  const navigate = useNavigate();
+  // Function to handle form submission
+  const goToDriver = () => {
+    navigate("/driver");
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Check if the entered password is correct
+    if (password === 'VITVLR2023') {
+      // Redirect to the next page or perform any other action
+      alert('Login successful! Redirecting to the next page...');
+      goToDriver();
+      // You can use React Router or any other method for navigation here
+    } else {
+      alert('Incorrect password. Please try again.');
+    }
   };
 
   return (
     <div>
-      {/* Navbar */}
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container">
           <Link className="navbar-brand" to="/">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bus-front" viewBox="0 0 16 16">
@@ -55,52 +73,35 @@ const Home = () => {
         </div>
       </nav>
 
-      {/* Bootstrap Hero Section */}
-      <div className="container py-5">
-      <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-      <div class="col-10 col-sm-8 col-lg-6">
-        <img src={heroImage} class="d-block mx-xs-auto mx-sm-auto mx-md-auto mx-lg-auto img-fluid" alt="Bootstrap Themes" width="100" height="100" loading="lazy"/>
-      </div>
-      <div class="col-lg-6">
-        <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Tired of waiting around ?</h1>
-        <p class="lead">Never miss a ride, follow your shuttl's stride!</p>
-        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-          <button className="btn btn-primary btn-lg px-4 me-md-2" onClick={goToViewer}>Try now</button>
-          <button className="btn btn-outline-secondary btn-lg px-4" onClick={goToDriver}>Driver's page</button>
+    <div className="container mt-5">
+      <div className="row justify-content-center">
+        <div className="col-md-6">
+          <div className="card">
+            <div className="card-body">
+              <h3 className="card-title text-center">Login</h3>
+              <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                  <label htmlFor="password">Password</label>
+                  <input
+                    type="password"
+                    className="form-control"
+                    id="password"
+                    value={password}
+                    onChange={handlePasswordChange}
+                    required
+                  />
+                </div>
+                <button type="submit" className="btn btn-primary btn-block">
+                  Login
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    </div>
-
-      {/* Buttons to navigate */}
-      {/* <div className="container mt-4">
-        <div className="row">
-          <div className="col-md-6">
-            <button className="btn btn-secondary" onClick={goToDriver}>
-              Go to Driver
-            </button>
-          </div>
-          <div className="col-md-6">
-            <button className="btn btn-secondary" onClick={goToViewer}>
-              Go to Viewer
-            </button>
-          </div>
-        </div>
-      </div> */}
-
-      {/* About */}
-
-
-      {/* Footer */}
-      <footer className="footer mt-5 py-3 bg-light">
-        <div className="container">
-          <span className="text-muted">
-            &copy; 2023 Shuttl. All rights reserved.
-          </span>
-        </div>
-      </footer>
     </div>
   );
 };
 
-export default Home;
+export default Login;

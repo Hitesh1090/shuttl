@@ -200,9 +200,9 @@ function Viewer() {
         </div>
       </nav>
 
-      <div class="container">
+      <div class="container my-5">
       <div class="h-100 p-5 mb-4 bg-body-tertiary rounded-3">
-      <div class="container py-5">
+      <div class="container">
         <h3 class="display-5 fw-bold">Drivers Online:</h3>
         <ol>
         {Object.entries(userValues).map(([socketId, values]) => (
