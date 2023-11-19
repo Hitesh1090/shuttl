@@ -160,7 +160,7 @@ function Viewer() {
 
   return (
     <div>
-      <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+      <div class="h-100 p-5 mb-4 bg-body-tertiary rounded-3">
       <div class="container-fluid py-5">
         <h2 class="display-5 fw-bold">Drivers Online</h2>
         <ol>
@@ -174,7 +174,7 @@ function Viewer() {
     </div>
 
       <div id="map" style={{ height: "400px" }}></div>
-      {Object.keys(userValues).map(([socketId,values]) => (
+      {Object.entries(userValues).map(([socketId,values]) => (
         <button class="list-group-item list-group-item-action d-flex gap-3 py-3" key={socketId} onClick={() => handleDriverSelect(socketId)}>
           <div class="d-flex gap-2 w-100 justify-content-between">
         <div>
