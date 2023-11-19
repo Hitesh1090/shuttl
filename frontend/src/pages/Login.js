@@ -75,7 +75,7 @@ const Login = () => {
       </nav>
       <div className="container">
   <div className="p-5 text-center">
-    <img src={heroImage} className="d-block mx-xs-auto mx-sm-auto mx-md-auto mx-lg-auto img-fluid" alt="Bootstrap Themes" width="100" height="100" loading="lazy"/>
+    <img src={heroImage} className="bi mt-4 mb-3" alt="Bootstrap Themes" width="100" height="100" loading="lazy"/>
     <h1 className="text-body-emphasis">Login</h1>
     <p className="col-lg-8 mx-auto fs-5 text-muted">
       You must be a legitimate registered shuttle-cab driver in VIT Vellore Campus to be able to login.
