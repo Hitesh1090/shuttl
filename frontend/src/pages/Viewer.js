@@ -160,19 +160,28 @@ function Viewer() {
 
   return (
     <div>
-       {/*<h1>Viewer Page</h1>
-      <h2>User Values:</h2>
-      <ul>
+      <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+      <div class="container-fluid py-5">
+        <h2 class="display-5 fw-bold">Drivers Online</h2>
+        <ol>
         {Object.entries(userValues).map(([socketId, values]) => (
-          <li key={socketId}>
-            Socket ID: {socketId}, Latitude: {values.latitude}, Longitude: {values.longitude}, Driver Type: {values.driverType}
+          <li class="col-md-8 fs-4" key={socketId}>
+            Driver Type: {values.driverType}
           </li>
         ))}
-      </ul> */}
+        </ol>
+      </div>
+    </div>
+
       <div id="map" style={{ height: "400px" }}></div>
-      {Object.keys(userValues).map((socketId) => (
-        <button key={socketId} onClick={() => handleDriverSelect(socketId)}>
-          Select Driver {socketId}
+      {Object.keys(userValues).map(([socketId,values]) => (
+        <button class="list-group-item list-group-item-action d-flex gap-3 py-3" key={socketId} onClick={() => handleDriverSelect(socketId)}>
+          <div class="d-flex gap-2 w-100 justify-content-between">
+        <div>
+          <h6 class="mb-0">Select Driver</h6>
+          <p class="mb-0 opacity-75">{values.driverType}</p>
+      </div>
+      </div>
         </button>
       ))}
     </div>
