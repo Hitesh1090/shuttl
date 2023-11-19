@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'jquery/dist/jquery.min.js';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import { Link, useNavigate } from "react-router-dom";
-import heroImage from './icons8-bus.gif';
+import heroImage from './busstand.png';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const Home = () => {
   };
 
   return (
-    <div class="container">
+    <div>
       {/* Navbar */}
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container">
@@ -55,11 +55,11 @@ const Home = () => {
         </div>
       </nav>
 
-      {/* Bootstrap Hero Section */}
-      <div className="py-5">
-      <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-      <div class="col-10 col-sm-8 col-lg-6 mx-auto">
-        <img src={heroImage} class="bi mt-4 mb-3" alt="Bootstrap Themes" width="100" height="100" loading="lazy"/>
+{/* Bootstrap Hero Section */}
+<div class="container col-xxl-8 px-4 py-5">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+      <div class="col-10 col-sm-8 col-lg-6">
+        <img src={heroImage} class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="700" loading="lazy" />
       </div>
       <div class="col-lg-6">
         <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Tired of waiting around ?</h1>
@@ -70,7 +70,11 @@ const Home = () => {
         </div>
       </div>
     </div>
-    </div>
+  </div>
+
+
+      
+      
 
       {/* Buttons to navigate */}
       {/* <div className="container mt-4">

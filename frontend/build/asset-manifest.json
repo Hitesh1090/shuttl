@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/static/css/main.5966180a.css",
-    "main.js": "/static/js/main.ac9be620.js",
+    "main.js": "/static/js/main.f22204bd.js",
+    "static/media/busstand.png": "/static/media/busstand.a88bb775cb0e5b1deef0.png",
     "static/media/blackbus.gif": "/static/media/blackbus.6d1f49b9de3c24cd8925.gif",
-    "static/media/icons8-bus.gif": "/static/media/icons8-bus.7e72f474ca03e7dea4d1.gif",
     "static/media/bus-front-fill.svg": "/static/media/bus-front-fill.eb911264b54a11760a8ee03c0a9e3f1e.svg",
     "static/media/geo-fill.svg": "/static/media/geo-fill.c2ddcb33b33a03c8aa4c6d1d2dce0abd.svg",
     "index.html": "/index.html",
     "main.5966180a.css.map": "/static/css/main.5966180a.css.map",
-    "main.ac9be620.js.map": "/static/js/main.ac9be620.js.map"
+    "main.f22204bd.js.map": "/static/js/main.f22204bd.js.map"
   },
   "entrypoints": [
     "static/css/main.5966180a.css",
-    "static/js/main.ac9be620.js"
+    "static/js/main.f22204bd.js"
   ]
 }
