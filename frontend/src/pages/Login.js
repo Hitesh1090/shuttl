@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'jquery/dist/jquery.min.js';
 import { Link, useNavigate } from "react-router-dom";
 import 'bootstrap/dist/js/bootstrap.min.js';
+import heroImage from './icons8-bus.gif';
 
 // Functional component for the login page
 const Login = () => {
@@ -73,10 +74,13 @@ const Login = () => {
         </div>
       </nav>
 
-    <div className="container mt-5">
-      <div className="row justify-content-center">
-        <div className="col-md-6">
-          <div className="card">
+<div class="p-5 text-center bg-body-tertiary rounded-3">
+<img src={heroImage} class="d-block mx-xs-auto mx-sm-auto mx-md-auto mx-lg-auto img-fluid" alt="Bootstrap Themes" width="100" height="100" loading="lazy"/>
+    <h1 class="text-body-emphasis">Login</h1>
+    <p class="col-lg-8 mx-auto fs-5 text-muted">
+      You must be a legitimate registered shuttle-cab driver in VIT Vellore Campus to be able to login.
+    </p>
+    <div className="card">
             <div className="card-body">
               <h3 className="card-title text-center">Login</h3>
               <form onSubmit={handleSubmit}>
@@ -84,7 +88,7 @@ const Login = () => {
                   <label htmlFor="password">Password</label>
                   <input
                     type="password"
-                    className="form-control"
+                    className="form-control py-2"
                     id="password"
                     value={password}
                     onChange={handlePasswordChange}
@@ -97,9 +101,7 @@ const Login = () => {
               </form>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
+  </div>     
     </div>
   );
 };
