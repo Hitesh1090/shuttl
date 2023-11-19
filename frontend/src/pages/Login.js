@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'jquery/dist/jquery.min.js';
 import { Link, useNavigate } from "react-router-dom";
 import 'bootstrap/dist/js/bootstrap.min.js';
-import heroImage from './icons8-bus.gif';
+import heroImage from './blackbus.gif';
 
 // Functional component for the login page
 const Login = () => {
@@ -73,35 +73,40 @@ const Login = () => {
           </div>
         </div>
       </nav>
-
-<div class="p-5 text-center bg-body-tertiary rounded-3">
-<img src={heroImage} class="d-block mx-xs-auto mx-sm-auto mx-md-auto mx-lg-auto img-fluid" alt="Bootstrap Themes" width="100" height="100" loading="lazy"/>
-    <h1 class="text-body-emphasis">Login</h1>
-    <p class="col-lg-8 mx-auto fs-5 text-muted">
+      <div className="container">
+  <div className="p-5 text-center bg-body-tertiary rounded-3">
+    <img src={heroImage} className="d-block mx-xs-auto mx-sm-auto mx-md-auto mx-lg-auto img-fluid" alt="Bootstrap Themes" width="100" height="100" loading="lazy"/>
+    <h1 className="text-body-emphasis">Login</h1>
+    <p className="col-lg-8 mx-auto fs-5 text-muted">
       You must be a legitimate registered shuttle-cab driver in VIT Vellore Campus to be able to login.
     </p>
-    <div className="card">
-            <div className="card-body">
-              <h3 className="card-title text-center">Login</h3>
-              <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                  <label htmlFor="password">Password</label>
-                  <input
-                    type="password"
-                    className="form-control py-2"
-                    id="password"
-                    value={password}
-                    onChange={handlePasswordChange}
-                    required
-                  />
-                </div>
-                <button type="submit" className="btn btn-primary btn-block">
-                  Login
-                </button>
-              </form>
-            </div>
+    <div className="row justify-content-center">
+      <div className="col-lg-8">
+        <div className="card">
+          <div className="card-body">
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label htmlFor="password">Password</label>
+                <input
+                  type="password"
+                  className="form-control my-2"
+                  id="password"
+                  value={password}
+                  onChange={handlePasswordChange}
+                  required
+                />
+              </div>
+              <button type="submit" className="btn btn-primary btn-block">
+                Login
+              </button>
+            </form>
           </div>
-  </div>     
+        </div>
+      </div>
+    </div>
+  </div>    
+</div>
+ 
     </div>
   );
 };
