@@ -173,7 +173,14 @@ function Viewer() {
       </div>
     </div>
 
+          
+
+      <div class="container">
       <div id="map" style={{ height: "400px" }}></div>
+      </div>
+      <div class="container">
+      <div class="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
+  <div class="list-group">
       {Object.entries(userValues).map(([socketId,values]) => (
         <button class="list-group-item list-group-item-action d-flex gap-3 py-3" key={socketId} onClick={() => handleDriverSelect(socketId)}>
           <div class="d-flex gap-2 w-100 justify-content-between">
@@ -184,6 +191,9 @@ function Viewer() {
       </div>
         </button>
       ))}
+</div>
+</div>
+      </div>
     </div>
   );
 }
