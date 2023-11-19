@@ -17,7 +17,7 @@ const Home = () => {
   };
 
   return (
-    <div>
+    <div class="container">
       {/* Navbar */}
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container">
@@ -56,9 +56,9 @@ const Home = () => {
       </nav>
 
       {/* Bootstrap Hero Section */}
-      <div className="container py-5">
+      <div className="py-5">
       <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-      <div class="col-10 col-sm-8 col-lg-6">
+      <div class="col-10 col-sm-8 col-lg-6 mx-auto">
         <img src={heroImage} class="bi mt-4 mb-3" alt="Bootstrap Themes" width="100" height="100" loading="lazy"/>
       </div>
       <div class="col-lg-6">
