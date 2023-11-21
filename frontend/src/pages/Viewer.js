@@ -60,28 +60,6 @@ function Viewer() {
     }
   };
   
-  
-
-  useEffect(() => {
-    try {
-      // Initialize the map when the component mounts
-      if (!map || refreshMap) {
-        const newMap = L.map("map").setView([12.9725174, 79.1583036], 15);
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(newMap);
-        setMap(newMap);
-        setRefreshMap(false);
-        console.log("Map initialized");
-      }
-    } catch (error) {
-      console.error("Map initialization error:", error);
-    }
-  }, [map, refreshMap]);
-
-
-  const refreshMapFunction = () => {
-    setRefreshMap(true);
-  };
-
   const clearSelection = () => {
     setSelectedDriver(null);
   
@@ -91,9 +69,26 @@ function Viewer() {
       map.removeControl(routingControl.current);
       routingControl.current = null;
     }
-    refreshMapFunction();
+
+    window.location.reload();
   };
   
+
+  useEffect(() => {
+    try {
+      // Initialize the map when the component mounts
+      if (!map) {
+        const newMap = L.map("map").setView([12.9725174, 79.1583036], 15);
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(newMap);
+        setMap(newMap);
+        console.log("Map initialized");
+      }
+    } catch (error) {
+      console.error("Map initialization error:", error);
+    }
+  }, [map]);
+
+
   const addMarkerForUserLocation = (map) => {
     if (navigator.geolocation) {
       console.log("Bruv inside curr pos bruv :)")
