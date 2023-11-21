@@ -19,6 +19,8 @@ function Viewer() {
   const [userCoordinates, setUserCoordinates] = useState(null);
   const [driverCoordinates, setDriverCoordinates] = useState(null);
   const routingControl = useRef(null);
+
+  const [intervalId, setIntervalId] = useState(null);
  
 
   useEffect(() => {
@@ -143,7 +145,7 @@ function Viewer() {
   
       console.log("UC : " + userCoordinates + " DC :" + driverCoordinates);
   
-      L.Routing.control({
+      const newRoutingControl = L.Routing.control({
         waypoints: [
           L.latLng(userCoordinates[0], userCoordinates[1]),
           L.latLng(driverCoordinates[0], driverCoordinates[1]),
@@ -151,16 +153,46 @@ function Viewer() {
         show: false,
         autoRoute: true,
         waypointMode: 'connect',
-        collapsible: true, // assuming 'connect' is a string
-      }).addTo(map).on('routesfound', function (e) {
+        collapsible: true,
+      }).addTo(map);
+  
+      newRoutingControl.on('routesfound', function (e) {
         routingControl.current = e.routes[0].route; // Store the routing control
       });
-      // To remove the routing control and cleanup
-      /* routing.removeFrom(map);
-      routing = null; */
+  
+      // Clear the previous interval if it exists
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+  
+      // Set a new interval to refresh the route every 5 seconds
+      const newIntervalId = setInterval(() => {
+        newRoutingControl.route(); // Refresh the route
+      }, 5000);
+  
+      setIntervalId(newIntervalId);
     }
   }, [selectedDriver, map, userCoordinates, driverCoordinates]);
   
+  // Clean up the interval when the component unmounts or when the selected driver changes
+  useEffect(() => {
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, [intervalId, selectedDriver]);
+  
+  // Clean up the route when the selected driver changes
+  useEffect(() => {
+    if (selectedDriver && !userValues[selectedDriver]) {
+      if (routingControl.current) {
+        routingControl.current.spliceWaypoints(0, 2); // Remove waypoints to clear the route
+        map.removeControl(routingControl.current);
+        routingControl.current = null; // Remove the routing control
+      }
+    }
+  }, [selectedDriver, userValues, map]);
 
   return (
     <div>
@@ -200,6 +232,7 @@ function Viewer() {
         </div>
       </nav>
 
+<div class="container my-5">
 <div class="row align-items-md-stretch">
       <div class="col-md-6">
         <div class="h-100 p-5 text-bg-dark rounded-3">
@@ -212,6 +245,7 @@ function Viewer() {
           <p>Any drivers logged in to the server will show up in the map given below and you can select their respective button to start the routing.</p>
         </div>
       </div>
+    </div>
     </div>
 
   {/*     <div class="container my-5">
