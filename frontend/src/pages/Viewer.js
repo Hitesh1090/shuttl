@@ -146,6 +146,7 @@ function Viewer() {
         ]);
       } else {
         // Create a new routing control
+        console.log("GOtha new routing control bahaha");
         routingControl.current = L.Routing.control({
           waypoints: [
             L.latLng(userCoordinates[0], userCoordinates[1]),
