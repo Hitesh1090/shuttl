@@ -200,20 +200,28 @@ function Viewer() {
         </div>
       </nav>
 
-      <div class="container my-5">
-      <div class="h-100 p-5 mb-4 bg-body-tertiary rounded-3">
-      <div class="container">
-        <h3 class="display-5 fw-bold">Drivers Online:</h3>
-        <ol>
-        {Object.entries(userValues).map(([socketId, values]) => (
-          <li class="col-md-8 fs-4" key={socketId}>
-            Driver Type: {values.driverType}
-          </li>
-        ))}
-        </ol>
+<div class="row align-items-md-stretch">
+      <div class="col-md-6">
+        <div class="h-100 p-5 text-bg-dark rounded-3">
+          <h2>Drivers Online</h2>
+          <p>{Object.keys(userValues).length}</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+          <p>Any drivers logged in to the server will show up in the map given below and you can select their respective button to start the routing.</p>
+        </div>
       </div>
     </div>
+
+  {/*     <div class="container my-5">
+      <div class="h-100 p-5 mb-4 text-bg-dark rounded-3">
+      <div class="container">
+        <h3 class="display-5 fw-bold">Drivers Online:</h3>
+        <p>{Object.keys(userValues).length}</p>
+      </div>
     </div>
+    </div> */}
 
           
 
