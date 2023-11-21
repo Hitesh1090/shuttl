@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import socket from "../services/socket";
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
-import L, { routing } from 'leaflet';
+import L from 'leaflet';
 import 'leaflet-routing-machine';
 import { connect } from "socket.io-client";
 import userIc from './Images/geo-fill.svg';
@@ -20,7 +20,7 @@ function Viewer() {
   const [driverCoordinates, setDriverCoordinates] = useState(null);
   const routingControl = useRef(null);
 
-  const [intervalId, setIntervalId] = useState(null);
+  
  
 
   useEffect(() => {
@@ -138,61 +138,31 @@ function Viewer() {
     console.log("This is the routing useEffect");
     if (selectedDriver && map && userCoordinates && driverCoordinates) {
       if (routingControl.current) {
-        routingControl.current.spliceWaypoints(0, 2); // Remove waypoints to clear the route
-        map.removeControl(routingControl.current);
-        routingControl.current = null; // Remove the routing control
-      }
-  
-      console.log("UC : " + userCoordinates + " DC :" + driverCoordinates);
-  
-      const newRoutingControl = L.Routing.control({
-        waypoints: [
+        routingControl.current.spliceWaypoints(0, 2);
+        // map.removeControl(routingControl.current); // Remove this line
+        routingControl.current.setWaypoints([
           L.latLng(userCoordinates[0], userCoordinates[1]),
           L.latLng(driverCoordinates[0], driverCoordinates[1]),
-        ],
-        show: false,
-        autoRoute: true,
-        waypointMode: 'connect',
-        collapsible: true,
-      }).addTo(map);
-  
-      newRoutingControl.on('routesfound', function (e) {
-        routingControl.current = e.routes[0].route; // Store the routing control
-      });
-  
-      // Clear the previous interval if it exists
-      if (intervalId) {
-        clearInterval(intervalId);
+        ]);
+      } else {
+        // Create a new routing control
+        routingControl.current = L.Routing.control({
+          waypoints: [
+            L.latLng(userCoordinates[0], userCoordinates[1]),
+            L.latLng(driverCoordinates[0], driverCoordinates[1]),
+          ],
+          show: false,
+          autoRoute: true,
+          waypointMode: 'connect',
+          collapsible: true,
+        }).addTo(map).on('routesfound', function (e) {
+          routingControl.current = e.routes[0].route;
+        });
       }
-  
-      // Set a new interval to refresh the route every 5 seconds
-      const newIntervalId = setInterval(() => {
-        newRoutingControl.route(); // Refresh the route
-      }, 5000);
-  
-      setIntervalId(newIntervalId);
+      
     }
   }, [selectedDriver, map, userCoordinates, driverCoordinates]);
   
-  // Clean up the interval when the component unmounts or when the selected driver changes
-  useEffect(() => {
-    return () => {
-      if (intervalId) {
-        clearInterval(intervalId);
-      }
-    };
-  }, [intervalId, selectedDriver]);
-  
-  // Clean up the route when the selected driver changes
-  useEffect(() => {
-    if (selectedDriver && !userValues[selectedDriver]) {
-      if (routingControl.current) {
-        routingControl.current.spliceWaypoints(0, 2); // Remove waypoints to clear the route
-        map.removeControl(routingControl.current);
-        routingControl.current = null; // Remove the routing control
-      }
-    }
-  }, [selectedDriver, userValues, map]);
 
   return (
     <div>
