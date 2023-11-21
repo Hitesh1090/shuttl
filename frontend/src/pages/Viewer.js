@@ -59,7 +59,17 @@ function Viewer() {
     }
   };
   
-
+  const clearSelection = () => {
+    setSelectedDriver(null);
+  
+    // Remove the routing control if it exists
+    if (routingControl.current) {
+      routingControl.current.spliceWaypoints(0, 2);
+      map.removeControl(routingControl.current);
+      routingControl.current = null;
+    }
+  };
+  
 
   useEffect(() => {
     try {
@@ -246,6 +256,9 @@ function Viewer() {
       </div>
         </button>
       ))}
+      <button onClick={clearSelection} className="btn btn-secondary">
+    Clear Selection
+  </button>
 </div>
 </div>
       </div>
