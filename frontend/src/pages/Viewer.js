@@ -88,7 +88,7 @@ function Viewer() {
     }
   }, [map]);
 
-
+  //v1
   const addMarkerForUserLocation = (map) => {
     if (navigator.geolocation) {
       console.log("Bruv inside curr pos bruv :)")
@@ -107,6 +107,29 @@ function Viewer() {
       console.error("Geolocation is not supported by your browser.");
     }
   };
+
+  //TRASSSSHHHHHHHHH
+  // const addMarkerForUserLocation = async (map) => {
+  //   console.log("Bruv inside curr pos bruv :)")
+  //   if (navigator.geolocation) {
+  //     try{
+  //       const position = await new Promise((resolve, reject) => {
+  //         navigator.geolocation.getCurrentPosition(resolve, reject);
+  //       });
+        
+  //       const { latitude, longitude } = position.coords;
+  //         setUserCoordinates([latitude, longitude]); // Set the user coordinates
+  //         const userMarker = L.marker([latitude, longitude], { icon: userIcon }).addTo(map);
+  //         userMarker.bindPopup("Your Location").openPopup();
+  //     }
+  //     catch(error)
+  //     {
+  //       console.error("Error getting location:", error);
+  //     }
+  //   } else {
+  //     console.error("Geolocation is not supported by your browser.");
+  //   }
+  // };
 
 
   useEffect(() => {
@@ -151,7 +174,7 @@ function Viewer() {
     console.log("This is the routing useEffect");
     if (selectedDriver && map && userCoordinates && driverCoordinates) {
       if (routingControl.current) {
-        routingControl.current.spliceWaypoints(0, 2);
+        // routingControl.current.spliceWaypoints(0, 2);
         // map.removeControl(routingControl.current); // Remove this line
         routingControl.current.setWaypoints([
           L.latLng(userCoordinates[0], userCoordinates[1]),
@@ -169,8 +192,9 @@ function Viewer() {
           autoRoute: true,
           waypointMode: 'connect',
           collapsible: true,
-        }).addTo(map).on('routesfound', function (e) {
-          routingControl.current = e.routes[0].route;
+        }).addTo(map);
+        routingControl.current.on('routesfound', function (e) {
+          // routingControl.current = e.routes[0].route;
         });
       }
       
@@ -179,7 +203,7 @@ function Viewer() {
   
 
   return (
-    <div>
+    <div className="d-flex flex-column min-vh-100">
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container">
           <Link className="navbar-brand" to="/">
@@ -213,13 +237,13 @@ function Viewer() {
 
 <div class="container my-5">
 <div class="row align-items-md-stretch">
-      <div class="col-md-6">
+      <div class="col-md-6 my-2">
         <div class="h-100 p-5 text-bg-dark rounded-3">
           <h2>Drivers Online</h2>
           <p>{Object.keys(userValues).length}</p>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6 my-2">
         <div class="h-100 p-5 bg-body-tertiary border rounded-3">
           <p>Any drivers logged in to the server will show up in the map given below and you can select their respective button to start the routing.</p>
         </div>
@@ -239,11 +263,18 @@ function Viewer() {
           
 
       <div class="container">
-      <div id="map" style={{ height: "400px" }}></div>
+      <div id="map" style={{ height: "400px" }} className="rounded-3"></div>
       </div>
-      <div class="container">
-      <div class="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
-  <div class="list-group">
+
+      <div class="container my-5">
+<div class="row align-items-md-stretch">
+      <div class="col-md-6 my-2">
+        <div class="h-100 p-5 text-bg-warning rounded-3">
+          <p>Please make sure to clear selection if you are changing the driver</p>
+        </div>
+      </div>
+      <div class="col-md-6 my-2">
+      <div class="list-group">
       {Object.entries(userValues).map(([socketId,values]) => (
         <button class="list-group-item list-group-item-action d-flex gap-3 py-3" key={socketId} onClick={() => handleDriverSelect(socketId)}>
           <div class="d-flex gap-2 w-100 justify-content-between">
@@ -258,8 +289,16 @@ function Viewer() {
     Clear Selection
   </button>
 </div>
-</div>
       </div>
+    </div>
+    </div>
+    <footer className="footer mt-5 py-3 bg-light mt-auto">
+        <div className="container">
+          <span className="text-muted">
+            &copy; 2023 Shuttl. All rights reserved.
+          </span>
+        </div>
+      </footer>
     </div>
   );
 }

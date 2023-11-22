@@ -103,6 +103,13 @@ const Login = () => {
   </div>    
 </div>
  
+<footer className="footer mt-5 py-3 bg-light fixed-bottom">
+        <div className="container">
+          <span className="text-muted">
+            &copy; 2023 Shuttl. All rights reserved.
+          </span>
+        </div>
+      </footer>
     </div>
   );
 };
