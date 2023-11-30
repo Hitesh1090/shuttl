@@ -35,8 +35,5 @@ An efficient and transparent online service for hassle-free shuttle tracking, tr
 ![Itinerary](https://github.com/Hitesh1090/shuttl/blob/main/image3.jpg)
 
 
-## Authors
 
-- [@TechShivvy](https://github.com/TechShivvy)
-- [@Hitesh1090](https://github.com/Hitesh1090)
 
