@@ -295,7 +295,7 @@ function Viewer() {
     <footer className="footer mt-5 py-3 bg-light mt-auto">
         <div className="container">
           <span className="text-muted">
-            &copy; 2023 Shuttl. All rights reserved.
+            &copy; 2024 Shuttl. All rights reserved.
           </span>
         </div>
       </footer>
