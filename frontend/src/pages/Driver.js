@@ -31,7 +31,7 @@ function Driver() {
   try {
     const response = await fetch("https://api.thingspeak.com/channels/2521937/feeds.json?results=1");
     const data = await response.json();
-
+    console.log(data);
     // Check if the response contains feeds array
     if (data.feeds && data.feeds.length > 0) {
       const feed = data.feeds[0]; // Get the first feed object
