@@ -3,7 +3,7 @@ import Driver from "./pages/Driver";
 import Viewer from "./pages/Viewer";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-//import Thingspeak from "./pages/thingspeak";
+import Thingspeak from "./pages/thingspeak";
 import "./App.css";
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
         <Route path="/driver" element={<Driver />} />
         <Route path="/viewer" element={<Viewer />} />
         <Route path="/login" element={<Login />} />
-        {/* <Route path="/thingspeak" element={<Thingspeak />} /> */}
+        <Route path="/thingspeak" element={<Thingspeak />} />
       </Routes>
     </Router>
   );

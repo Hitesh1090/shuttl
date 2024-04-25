@@ -1,4 +1,4 @@
-/* import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import socket from "../services/socket";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -51,4 +51,3 @@ function Thingspeak() {
 }
 
 export default Thingspeak;
- */

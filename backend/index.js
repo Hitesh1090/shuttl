@@ -2,7 +2,7 @@ const cors = require("cors"); //cors-policy
 const http = require("http"); //http
 const express = require("express"); //framework for node
 const socketio = require("socket.io");  //socket connection 
-const request = require('request');
+
 
 //should do dk why
 const app = express();
@@ -18,7 +18,7 @@ let userValues = {};  //(driver_id:coor),or store in a db instead of here
 
 //.on("eventName",func(params){}) -> do func on eventName
 //.emit("eventName",params) -> emit an event of eventName with params
-const fetchDataFromThingSpeak = () => {
+/* const fetchDataFromThingSpeak = () => {
   // Make a request to the ThingSpeak API to get the latest data
   const url = 'https://api.thingspeak.com/channels/2521937/feeds.json?results=1';
   request(url, (error, response, body) => {
@@ -40,7 +40,7 @@ const fetchDataFromThingSpeak = () => {
 };
 
 // Emit message even if no clients are connected
-setInterval(fetchDataFromThingSpeak, 5000);
+setInterval(fetchDataFromThingSpeak, 5000); */
 
 //everytime a client the site
 io.on("connection", (socket) => {
