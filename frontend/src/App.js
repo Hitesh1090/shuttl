@@ -6,7 +6,9 @@ import Login from "./pages/Login";
 import Thingspeak from "./pages/thingspeak";
 import "./App.css";
 
+
 function App() {
+  Thingspeak();
   return (
     <Router>
       <Routes>
