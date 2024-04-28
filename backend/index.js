@@ -2,6 +2,7 @@ const cors = require("cors"); //cors-policy
 const http = require("http"); //http
 const express = require("express"); //framework for node
 const socketio = require("socket.io");  //socket connection 
+const axios = require("axios");  // for making HTTP requests
 
 
 //should do dk why
@@ -18,29 +19,35 @@ let userValues = {};  //(driver_id:coor),or store in a db instead of here
 
 //.on("eventName",func(params){}) -> do func on eventName
 //.emit("eventName",params) -> emit an event of eventName with params
-/* const fetchDataFromThingSpeak = () => {
-  // Make a request to the ThingSpeak API to get the latest data
+const fetchDataFromThingSpeak = async () => {
   const url = 'https://api.thingspeak.com/channels/2521937/feeds.json?results=1';
-  request(url, (error, response, body) => {
-      if (!error && response.statusCode === 200) {
-          // Parse the JSON response
-          const data = JSON.parse(body);
-          if (data && data.feeds && data.feeds.length > 0) {
-              // Extract latitude and longitude from the response
-              const latitude = parseFloat(data.feeds[0].field1);
-              const longitude = parseFloat(data.feeds[0].field2);
-              const driverType= "MensHostel";
-              // Emit the message to all clients
-              io.emit('message', { latitude, longitude, driverType });
-          }
+  try {
+    const response = await axios.get(url);
+    if (response.status === 200) { // Check if the response status is 200 (OK)
+      const data = response.data;
+      if (data && data.feeds && data.feeds.length > 0) {
+        const latitude = parseFloat(data.feeds[0].field1);
+        const longitude = parseFloat(data.feeds[0].field2);
+        const driverType = "MensHostel";
+        message = { latitude, longitude, driverType }
+        userValues["dackjaniels"] = message;
+        io.emit("userValues", userValues);
+        console.log("got data from uno and sent!")
+        // io.emit('message', { latitude, longitude, driverType });
       } else {
-          console.error('Error fetching data from ThingSpeak:', error);
+        console.error('No data found in ThingSpeak response');
       }
-  });
+    } else {
+      console.error(`Unexpected status code ${response.status} while fetching data from ThingSpeak`);
+    }
+  } catch (error) {
+    console.error('Error fetching data from ThingSpeak:', error);
+  }
 };
 
+
 // Emit message even if no clients are connected
-setInterval(fetchDataFromThingSpeak, 5000); */
+setInterval(fetchDataFromThingSpeak, 5000);
 
 //everytime a client the site
 io.on("connection", (socket) => {

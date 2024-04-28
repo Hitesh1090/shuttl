@@ -8,7 +8,7 @@ import "./App.css";
 
 
 function App() {
-  Thingspeak();
+  
   return (
     <Router>
       <Routes>
@@ -16,7 +16,7 @@ function App() {
         <Route path="/driver" element={<Driver />} />
         <Route path="/viewer" element={<Viewer />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/thingspeak" element={<Thingspeak />} />
+        {/* <Route path="/thingspeak" element={<Thingspeak />} /> */}
       </Routes>
     </Router>
   );
