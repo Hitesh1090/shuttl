@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import socket from "../services/socket";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-
+// import axios from "axios";
 function Driver() {
   const [coordinates, setCoordinates] = useState({
     latitude: null,
@@ -20,9 +19,9 @@ function Driver() {
         const { latitude, longitude } = position.coords;
         setCoordinates({ latitude, longitude });
         socket.emit("message", { latitude, longitude, driverType }); // Send driverType along with coordinates
-        await axios.get(
-          `https://api.thingspeak.com/update?api_key=CI1OEVQ3QNEFCCQ4&field3=${latitude}&field4=${longitude}`
-        );
+        // await axios.get(
+        //   `https://api.thingspeak.com/update?api_key=CI1OEVQ3QNEFCCQ4&field3=${latitude}&field4=${longitude}`
+        // );
       } catch (error) {
         console.error("Error getting location:", error);
       }
