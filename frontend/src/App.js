@@ -8,6 +8,8 @@ import "./App.css";
 
 
 function App() {
+  // console.log(process.env.REACT_APP_ENGA)
+  // console.log(process.env.REACT_APP_SERVER_URL)
   return (
     <Router>
       <Routes>
