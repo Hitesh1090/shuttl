@@ -26,7 +26,7 @@ const Login = () => {
     e.preventDefault();
 
     // Check if the entered password is correct
-    if (password === 'VITVLR2023') {
+    if (password === 'VITVLR2024') {
       // Redirect to the next page or perform any other action
       alert('Login successful! Redirecting to the next page...');
       goToDriver();
