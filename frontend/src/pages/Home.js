@@ -19,9 +19,6 @@ const Home = () => {
 
   return (
     <div>
-      <h1 style={{color: 'red', textAlign: 'center', backgroundColor: 'yellow', padding: '20px', border: '5px solid red'}}>
-        DEPLOYED VERSION 2.0 (IF YOU SEE THIS, IT UPDATED)
-      </h1>
       {/* Navbar */}
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container">
