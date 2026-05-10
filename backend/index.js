@@ -22,6 +22,12 @@ console.log("-------------------");
 // Login endpoint for drivers
 app.post("/login", (req, res) => {
   const { password } = req.body;
+  
+  // Debug log to find hidden spaces or typos
+  console.log("--- Login Attempt ---");
+  console.log(`Typed: [${password}] (Length: ${password?.length})`);
+  console.log(`Actual: [${DRIVER_PASSWORD}] (Length: ${DRIVER_PASSWORD?.length})`);
+  
   if (password === DRIVER_PASSWORD) {
     const token = jwt.sign({ role: "driver" }, SECRET_KEY, { expiresIn: "12h" });
     return res.json({ success: true, token });
