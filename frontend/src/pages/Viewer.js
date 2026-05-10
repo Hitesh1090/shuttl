@@ -34,6 +34,7 @@ const RoutingMachine = ({ userCoordinates, driverCoordinates }) => {
         show: false,
         autoRoute: true,
         waypointMode: 'connect',
+        createMarker: () => null,
         collapsible: true,
       }).addTo(map);
     } else {
