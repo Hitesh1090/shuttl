@@ -14,19 +14,13 @@ app.use(express.json());
 const SECRET_KEY = process.env.JWT_SECRET || "shuttl_super_secret_key";
 const DRIVER_PASSWORD = process.env.DRIVER_PASSWORD || "VITVLR2024";
 
-console.log("--- Auth Status ---");
-console.log("JWT_SECRET:", process.env.JWT_SECRET ? "Custom (Set)" : "Default (NOT SET)");
-console.log("DRIVER_PASSWORD:", process.env.DRIVER_PASSWORD ? "Custom (Set)" : "Default (NOT SET)");
-console.log("-------------------");
+
 
 // Login endpoint for drivers
 app.post("/login", (req, res) => {
   const { password } = req.body;
   
-  // Debug log to find hidden spaces or typos
-  console.log("--- Login Attempt ---");
-  console.log(`Typed: [${password}] (Length: ${password?.length})`);
-  console.log(`Actual: [${DRIVER_PASSWORD}] (Length: ${DRIVER_PASSWORD?.length})`);
+
   
   if (password === DRIVER_PASSWORD) {
     const token = jwt.sign({ role: "driver" }, SECRET_KEY, { expiresIn: "12h" });
