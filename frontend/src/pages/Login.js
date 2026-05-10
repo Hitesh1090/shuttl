@@ -5,6 +5,7 @@ import 'jquery/dist/jquery.min.js';
 import { Link, useNavigate } from "react-router-dom";
 import 'bootstrap/dist/js/bootstrap.min.js';
 import heroImage from './blackbus.gif';
+import { SOCKET_URL } from '../services/socket';
 
 // Functional component for the login page
 const Login = () => {
@@ -22,17 +23,27 @@ const Login = () => {
     navigate("/driver");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Check if the entered password is correct
-    if (password === 'VITVLR2024') {
-      // Redirect to the next page or perform any other action
-      alert('Login successful! Redirecting to the next page...');
-      goToDriver();
-      // You can use React Router or any other method for navigation here
-    } else {
-      alert('Incorrect password. Please try again.');
+    try {
+      const response = await fetch(`${SOCKET_URL}/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password })
+      });
+      const data = await response.json();
+
+      if (data.success) {
+        localStorage.setItem("driverToken", data.token);
+        alert('Login successful! Redirecting to the next page...');
+        goToDriver();
+      } else {
+        alert('Incorrect password. Please try again.');
+      }
+    } catch(err) {
+      alert("Error connecting to server.");
+      console.error(err);
     }
   };
 

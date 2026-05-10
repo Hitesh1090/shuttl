@@ -2,6 +2,7 @@ const cors = require("cors"); //cors-policy
 const http = require("http"); //http
 const express = require("express"); //framework for node
 const socketio = require("socket.io");  //socket connection 
+const jwt = require("jsonwebtoken");
 
 const app = express();
 const server = http.createServer(app);
@@ -9,6 +10,20 @@ const io = socketio(server, { cors: { origin: "*" } });
 
 app.use(cors());
 app.use(express.json());
+
+const SECRET_KEY = process.env.JWT_SECRET || "shuttl_super_secret_key";
+const DRIVER_PASSWORD = process.env.DRIVER_PASSWORD || "VITVLR2024";
+
+// Login endpoint for drivers
+app.post("/login", (req, res) => {
+  const { password } = req.body;
+  if (password === DRIVER_PASSWORD) {
+    const token = jwt.sign({ role: "driver" }, SECRET_KEY, { expiresIn: "12h" });
+    return res.json({ success: true, token });
+  } else {
+    return res.status(401).json({ success: false, message: "Invalid password" });
+  }
+});
 
 let numUsers = 0;
 //the entity which we are broadcasting
@@ -23,15 +38,27 @@ io.on("connection", (socket) => {
  
   //look at frontend/src/pages/Driver.js
   //it emits message event and u r catching it here
-  socket.on("message", (message) => {
-    console.log("Received message:", message);
-    console.log("Uservalues: ", userValues);
+  socket.on("message", (data) => {
+    if (!data.token) {
+      console.log("Blocked unauthorized socket emit");
+      return;
+    }
 
-    //creating new entry
-    userValues[socket.id] = message;
+    try {
+      // Verify token
+      jwt.verify(data.token, SECRET_KEY);
 
-    //emitting latest value
-    io.emit("userValues", userValues);
+      console.log("Received authenticated message from driver.");
+      const message = { latitude: data.latitude, longitude: data.longitude, driverType: data.driverType };
+      
+      //creating new entry
+      userValues[socket.id] = message;
+
+      //emitting latest value
+      io.emit("userValues", userValues);
+    } catch(err) {
+      console.log("Invalid token from driver emit.");
+    }
   });
 
   //like destructor

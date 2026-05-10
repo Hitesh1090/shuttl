@@ -18,7 +18,8 @@ function Driver() {
 
         const { latitude, longitude } = position.coords;
         setCoordinates({ latitude, longitude });
-        socket.emit("message", { latitude, longitude, driverType }); // Send driverType along with coordinates
+        const token = localStorage.getItem("driverToken");
+        socket.emit("message", { latitude, longitude, driverType, token }); // Send driverType and token along with coordinates
         // await axios.get(
         //   `https://api.thingspeak.com/update?api_key=CI1OEVQ3QNEFCCQ4&field3=${latitude}&field4=${longitude}`
         // );
